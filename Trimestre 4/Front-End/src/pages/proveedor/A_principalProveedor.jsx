@@ -16,6 +16,13 @@ const ETIQUETA_ESTADO = {
 
 /**
  * Portal del proveedor · Panel de control.
+ *
+ * Antes tenía todo hardcodeado (nombre "John Doe", conteos fijos,
+ * filas de ejemplo). Ahora:
+ *   - El proveedor se identifica vía `useMiProveedor()` (busca en
+ *     `proveedores` la fila con `perfil_id = auth.uid()`).
+ *   - Las órdenes son las suyas: `ordenes_compra` filtrado por
+ *     `proveedor_id`, en tiempo real (postgres_changes).
  */
 export default function ProveedorDashboard() {
   const { proveedor, cargando: cargandoProveedor, error: errorProveedor } = useMiProveedor();

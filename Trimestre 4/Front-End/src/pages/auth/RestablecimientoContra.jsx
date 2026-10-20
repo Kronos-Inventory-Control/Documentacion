@@ -5,6 +5,15 @@ import "../../assets/css/recuperacion.css";
 
 /**
  * Recuperación de contraseña · paso 2 ("revisa tu correo").
+ *
+ * Convertido desde pagesLogin/restablecimientoContra.html. El diseño
+ * original hablaba de un "PIN" — se ajustó el texto a "enlace" porque
+ * es lo que Supabase realmente envía (ver OlvidoContra.jsx). El botón
+ * "Restablecer contraseña" lleva a /cambiar-contrasena, que es la
+ * pantalla donde se escribe la nueva clave (a la que Supabase también
+ * manda directamente desde el enlace del correo).
+ *
+ * Los estilos viven en recuperacion.css.
  */
 export default function RestablecimientoContra() {
   const location = useLocation();

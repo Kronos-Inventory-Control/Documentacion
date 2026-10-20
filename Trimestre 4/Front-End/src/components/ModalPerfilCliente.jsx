@@ -14,6 +14,16 @@ const CAMPOS_INICIALES = {
 
 /**
  * Modal "Mi perfil" del portal del cliente.
+ *
+ * Reutiliza las mismas clases CSS que ya existen para el modal de
+ * "Mis Pedidos" (kr-modal / modal--pedidos / modal-pedidos__header /
+ * modal-pedidos__body / btn-cerrar-header), definidas en M_index.css,
+ * así que no requiere agregar ni tocar reglas de CSS: no interfiere
+ * con el modal del carrito ni con el de registro/login.
+ *
+ * Actualiza directamente la tabla `perfiles` en Supabase
+ * (auth.uid() = id), y refresca el AuthContext al guardar para que el
+ * nombre se vea actualizado de inmediato en el navbar.
  */
 export default function ModalPerfilCliente({ abierto, alCerrar }) {
   const { usuario, perfil, recargarPerfil } = useAuth();

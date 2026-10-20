@@ -1,3 +1,16 @@
+/* ==========================================================
+   KRONOS · ui-fixes.css
+   Correcciones globales de accesibilidad / contraste / overlays
+   solicitadas en la auditoría (sección 8 del prompt):
+   1) Fondo casi negro/opaco de SweetAlert2 y modales.
+   2) Texto invisible en botones secundarios (ej. "Historial de
+      Movimientos") al alternar modo claro/oscuro.
+   3) Scroll horizontal garantizado en tablas.
+   ========================================================== */
+
+/* 1) Overlay de SweetAlert2: antes quedaba prácticamente negro sólido.
+   Se homogeniza con una opacidad suave + blur, y se fuerza el z-index
+   por encima de cualquier modal de Bootstrap abierto detrás. */
 .swal2-container.swal2-backdrop-show,
 .swal2-container.swal2-noanimation {
     background-color: rgba(15, 17, 20, 0.45) !important;

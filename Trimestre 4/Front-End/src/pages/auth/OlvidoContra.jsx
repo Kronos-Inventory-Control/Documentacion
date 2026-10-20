@@ -9,6 +9,19 @@ import "../../assets/css/recuperacion.css";
 /**
  * Recuperación de contraseña · paso 1 (convertido desde
  * pagesLogin/olvidoContra.html).
+ *
+ * El HTML original pedía el correo y "enviaba" a
+ * restablecimientoContra.html sin hacer nada de verdad. Aquí sí se
+ * llama a Supabase: `resetPasswordForEmail` le manda al correo un
+ * enlace real de recuperación. Supabase NO tiene el flujo "PIN de 4
+ * dígitos" del diseño original (eso requeriría un backend propio que
+ * genere y valide ese PIN); el enlace que llega hace lo mismo pero
+ * sin PIN, así que la página siguiente (RestablecimientoContra) se
+ * ajustó para hablar de "enlace" en vez de "PIN".
+ *
+ * `redirectTo` apunta a /cambiar-contrasena: ahí es donde Supabase
+ * deja al usuario ya autenticado temporalmente (sesión de
+ * recuperación) para que ponga su nueva contraseña.
  */
 export default function OlvidoContra() {
   const navigate = useNavigate();

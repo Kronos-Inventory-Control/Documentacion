@@ -1,4 +1,7 @@
-
+/* ==========================================================
+   KRONOS · Apariencia y Tema Global Unificado
+   Migrado desde Actualizacion/Maquetacion/css/kronos-global.css
+   ========================================================== */
 :root,
 [data-theme="light"] {
     color-scheme: light;

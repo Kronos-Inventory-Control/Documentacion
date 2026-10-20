@@ -16,6 +16,17 @@ const ETIQUETA_ESTADO = Object.fromEntries(PASOS_ESTADO.map((p) => [p.valor, p.e
 
 /**
  * Portal del proveedor · Garantías (vista única, con modal
+ * aprobar/rechazar — como se acordó en la reunión del 16/09).
+ *
+ * `garantias` no tiene una columna `proveedor_id` propia: se relaciona
+ * con `ordenes_compra` a través de `garantias.orden_id`. Por eso:
+ *   1. Primero se traen (en tiempo real) las órdenes de ESTE proveedor.
+ *   2. Luego se traen todas las `garantias` y se filtran del lado del
+ *      cliente, quedándonos solo con las que apuntan a una orden suya.
+ *
+ * Aprobar/Rechazar hacen un `update` real sobre `garantias.estado`
+ * (+ `observacion`), que el cliente ve reflejado al instante en su
+ * propio portal (misma tabla, mismo canal realtime).
  */
 export default function D_garantiasProveedor() {
   const { proveedor } = useMiProveedor();

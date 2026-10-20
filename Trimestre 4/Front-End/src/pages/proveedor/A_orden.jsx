@@ -19,6 +19,19 @@ const ETIQUETA_ESTADO = {
 
 /**
  * Portal del proveedor · Órdenes de compra.
+ *
+ * Conectado en tiempo real a `ordenes_compra` (misma tabla que usa el
+ * jefe en A_historial.jsx), filtrado por `proveedor_id` = la ficha de
+ * este proveedor. Cada fila de esa tabla YA es un material con su
+ * cantidad (no existe una lista de "materiales" por orden en el
+ * esquema real), así que el modal de detalle muestra una sola fila —
+ * se quitó el sub-listado con botones "sí/no" por material que tenía
+ * la maqueta original, dejando solo confirmar/rechazar la orden
+ * completa (como se acordó en la reunión del 16/09).
+ *
+ * Confirmar -> estado "confirmada".
+ * Rechazar  -> pide motivo (obligatorio) y lo guarda en `observacion`,
+ *              estado "rechazada".
  */
 export default function ProveedorOrdenes() {
   const { proveedor } = useMiProveedor();

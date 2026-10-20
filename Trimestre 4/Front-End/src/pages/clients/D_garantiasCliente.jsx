@@ -94,7 +94,7 @@ export default function D_garantiasCliente() {
   const navigate = useNavigate();
   const { usuario, perfil } = useAuth();
 
-  // Conexiones en tiempo real Supabase
+  // Conexiones en tiempo real Supabase (Rutas intactas del Archivo A)
   const { datos: garantias, cargando, error } = useRealtimeTable("garantias", {
     orderBy: "fecha",
     ascending: false,
@@ -165,7 +165,7 @@ export default function D_garantiasCliente() {
   const radicar = async (e) => {
     e.preventDefault();
     if (!pedidoSel) {
-      Swal.fire({ title: "Selecciona un pedido válido", icon: "warning", confirmButtonColor: "#E8600C", heightAuto: false });
+      Swal.fire({ title: "Selecciona un pedido válido", icon: "warning", confirmButtonColor: "#E8600C" });
       return;
     }
 
@@ -212,7 +212,6 @@ export default function D_garantiasCliente() {
         text: "Tu solicitud de garantía fue enviada correctamente. Te avisaremos cuando el equipo la revise.",
         icon: "success",
         confirmButtonColor: "#E8600C",
-        heightAuto: false,
       });
 
       setModalNueva(false);
@@ -222,7 +221,6 @@ export default function D_garantiasCliente() {
         text: err.message,
         icon: "error",
         confirmButtonColor: "#E8600C",
-        heightAuto: false,
       });
     } finally {
       setEnviando(false);
@@ -285,7 +283,6 @@ export default function D_garantiasCliente() {
         text: "Los cambios han sido guardados exitosamente.",
         icon: "success",
         confirmButtonColor: "#E8600C",
-        heightAuto: false,
       });
 
       setModalEdicion(false);
@@ -296,7 +293,6 @@ export default function D_garantiasCliente() {
         text: err.message,
         icon: "error",
         confirmButtonColor: "#E8600C",
-        heightAuto: false,
       });
     } finally {
       setEnviando(false);
@@ -314,7 +310,6 @@ export default function D_garantiasCliente() {
       cancelButtonColor: "#6c757d",
       confirmButtonText: "Sí, cancelar",
       cancelButtonText: "Regresar",
-      heightAuto: false,
     });
 
     if (res.isConfirmed) {
@@ -346,7 +341,6 @@ export default function D_garantiasCliente() {
           text: "La solicitud fue cancelada correctamente.",
           icon: "success",
           confirmButtonColor: "#E8600C",
-          heightAuto: false,
         });
       } catch (err) {
         Swal.fire({
@@ -354,7 +348,6 @@ export default function D_garantiasCliente() {
           text: err.message,
           icon: "error",
           confirmButtonColor: "#E8600C",
-          heightAuto: false,
         });
       }
     }
@@ -362,14 +355,9 @@ export default function D_garantiasCliente() {
 
   const hayModal = modalNueva || modalDetalle || modalEdicion;
 
-  // Esc cierra el modal abierto y asegura la limpieza del body
+  // Esc cierra el modal abierto, igual que en los demás modales del aplicativo
   useEffect(() => {
-    if (!hayModal) {
-      document.body.classList.remove("modal-open");
-      document.body.style.overflow = "";
-      document.body.style.paddingRight = "";
-      return undefined;
-    }
+    if (!hayModal) return undefined;
     const alPresionar = (e) => {
       if (e.key !== "Escape") return;
       setModalNueva(false);
@@ -430,16 +418,16 @@ export default function D_garantiasCliente() {
       {/* ── CONTENIDO PRINCIPAL ────────────────────────────────────────────── */}
       <main className="container-fluid px-3 px-md-4 mt-4 mb-5">
         <div className="row g-4">
-          {/* ── ASIDE (Corregido para evitar desalineación del flex container) ── */}
+          {/* ── ASIDE ──────────────────────────────────────────────────────── */}
           <aside className="col-12 col-lg-3 col-xl-2 d-flex flex-column gap-3">
-            <div className="d-grid gap-2">
-              <button className="btn btn-outline-secondary text-start" onClick={() => navigate("/")}>
+            <div className="d-grid gap-2 d-md-flex d-lg-grid">
+              <button className="btn btn-outline-secondary text-start flex-fill" onClick={() => navigate("/")}>
                 <i className="bi bi-tag-fill me-2"></i>Categorías
               </button>
-              <button className="btn btn-outline-secondary text-start" onClick={() => navigate("/cliente/pedidos")}>
+              <button className="btn btn-outline-secondary text-start flex-fill" onClick={() => navigate("/cliente/pedidos")}>
                 <i className="bi bi-box-seam-fill me-2"></i>Mis pedidos
               </button>
-              <button className="btn gk-btn-sidebar text-start active">
+              <button className="btn gk-btn-sidebar text-start flex-fill active">
                 <i className="fa-solid fa-shield me-2"></i>Garantías
               </button>
             </div>
@@ -578,7 +566,7 @@ export default function D_garantiasCliente() {
         </div>
       </main>
 
-      {/* ── MODAL NUEVA GARANTÍA ───────────────────────────────────────────── */}
+      {/* ── MODAL NUEVA GARANTÍA (Heredado e integrado) ───────────────────── */}
       {modalNueva && (
         <div className="gk-modal-overlay" onClick={() => setModalNueva(false)}>
           <div className="gk-modal" onClick={(e) => e.stopPropagation()}>
@@ -593,7 +581,7 @@ export default function D_garantiasCliente() {
               </div>
             </div>
 
-            <form onSubmit={radicar} className="d-contents">
+            <form onSubmit={radicar} style={{ display: "contents" }}>
               <div className="gk-modal-body">
                 <div className="row g-3">
                   <div className="col-12 col-md-6">
@@ -663,6 +651,7 @@ export default function D_garantiasCliente() {
                     />
                   </div>
 
+                  {/* Selector visual de evidencia adaptado a las clases estéticas del Archivo A */}
                   <div className="col-12">
                     <label className="form-label fw-bold gk-moro small">
                       Seleccionar Imagen de Evidencia
@@ -702,7 +691,7 @@ export default function D_garantiasCliente() {
         </div>
       )}
 
-      {/* ── MODAL DETALLE ──────────────────────────────────────────────────── */}
+      {/* ── MODAL DETALLE (Ampliado con Evidencia, Bitácora e Historial) ──── */}
       {modalDetalle && garantiaSel && (
         <div className="gk-modal-overlay" onClick={cerrarDetalle}>
           <div className="gk-modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: "650px" }}>
@@ -740,6 +729,7 @@ export default function D_garantiasCliente() {
                 </div>
               </div>
 
+              {/* Muestra Evidencia Fotográfica si existe */}
               {garantiaSel.imagen_nombre && (
                 <div className="mb-3 border rounded overflow-hidden">
                   <div className="gk-modal-sub-head">
@@ -771,6 +761,7 @@ export default function D_garantiasCliente() {
                 </div>
               </div>
 
+              {/* Bitácora / Historial de Cambios */}
               {garantiaSel.bitacora && garantiaSel.bitacora.length > 0 && (
                 <div className="mb-3 border rounded overflow-hidden">
                   <div className="gk-modal-sub-head">
@@ -800,7 +791,7 @@ export default function D_garantiasCliente() {
         </div>
       )}
 
-      {/* ── MODAL EDICIÓN ──────────────────────────────────────────────────── */}
+      {/* ── MODAL EDICIÓN (Heredado de Archivo B) ─────────────────────────── */}
       {modalEdicion && garantiaSel && (
         <div className="gk-modal-overlay" onClick={() => setModalEdicion(false)}>
           <div className="gk-modal" onClick={(e) => e.stopPropagation()}>
@@ -815,7 +806,7 @@ export default function D_garantiasCliente() {
               </div>
             </div>
 
-            <form onSubmit={guardarEdicion} className="d-contents">
+            <form onSubmit={guardarEdicion} style={{ display: "contents" }}>
               <div className="gk-modal-body">
                 <div className="row g-3">
                   <div className="col-12">

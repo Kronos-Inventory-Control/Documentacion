@@ -1,3 +1,13 @@
+// Botón hamburguesa del menú lateral (solo visible en pantallas <= 768px).
+// Debe renderizarse ANTES y AFUERA del <div className="contenedor">,
+// porque el CSS depende de esa posición de hermano:
+//   #menu:checked ~ .contenedor aside
+//
+// Uso en el layout:
+//   <MenuToggle abierto={menuAbierto} onCambiar={setMenuAbierto} />
+//   <Proveedorheader />
+//   <div className="contenedor">...</div>
+
 export default function MenuToggle({ abierto, onCambiar }) {
   return (
     <>

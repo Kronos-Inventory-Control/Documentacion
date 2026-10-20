@@ -1,3 +1,14 @@
+/* ==========================================================
+   KRONOS · D_garantia-modales.css
+   Modales de las garantías del JEFE (Nueva solicitud, Detalle de la
+   solicitud y Estado de la garantía del historial).
+
+   Siguen el mismo diseño que los modales de Stock: cabecera oscura con
+   borde naranja (.encabezado-ficha de panel-base.css), icono + título a
+   la izquierda y logo a la derecha, cuerpo y pie que respetan el tema
+   claro/oscuro con las variables --k-*.
+   ========================================================== */
+
 /* ---------- CAJA DEL MODAL ---------- */
 
 .modal-garantia .modal-content {

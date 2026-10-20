@@ -2,7 +2,20 @@ import { useMemo, useRef, useState } from "react";
 import "../../assets/css/S_stock.css";
 import logo from "../../assets/img/logo.png";
 import { useRealtimeTable } from "../../hooks/useRealtimeTable";
+// AJUSTA esta importación según cómo exportes el cliente en src/api/supabase.js
 import { supabase } from "../../api/supabase";
+
+/**
+ * Gestión de Inventario · Stock (tiempo real con Supabase)
+ *
+ *  - Tablas: `productos` y `categorias` (ver categorias.sql).
+ *  - Categorías en tarjetas con icono + descripción + cantidad al seleccionar.
+ *  - "Seleccionar todas" / "Limpiar".
+ *  - Crear categoría nueva (sin repetidas, ignora mayúsculas, tildes y espacios).
+ *  - Eliminar categoría (sus productos pasan a "Sin categoría"; todo en una sola transacción).
+ *  - Editar producto con la categoría en lista desplegable (no se escribe).
+ *  - Eliminar producto (con confirmación).
+ */
 
 const REGISTROS_POR_PAGINA = 5;
 const SIN_CATEGORIA = "Sin categoría";

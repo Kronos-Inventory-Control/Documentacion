@@ -2,7 +2,13 @@ import { useMemo, useState } from "react";
 import "../../assets/css/D_garantia-jefe.css";
 import "../../assets/css/D_garantia-modales.css";
 import logo from "../../assets/img/logo.png";
-import { useRealtimeTable } from "../../hooks/useRealtimeTable"; 
+import { useRealtimeTable } from "../../hooks/useRealtimeTable";
+
+/**
+ * Garantías · Historial — registro acumulativo de garantías ya
+ * resueltas (aprobadas o rechazadas), sincronizado en tiempo real
+ * desde la misma tabla `garantias` que usa la página de Solicitudes.
+ */
 
 const ETIQUETA_ESTADO = {
   aprobada: "Aprobada",
@@ -23,6 +29,11 @@ const mensajePorEstado = (garantia) => {
   return "Su solicitud de garantía ha sido revisada y no procede.";
 };
 
+// Traduce el estado guardado en Supabase a la clase CSS de color del
+// badge (.badge-status-comic.aprobado/.rechazado/.revision/.no-aplica
+// definidas en D_garantia-jefe.css), ya que los nombres de estado en
+// la base de datos (aprobada, en_revision, cancelada...) no coinciden
+// 1:1 con esas clases.
 const claseBadgeEstado = (estado) => {
   const valor = (estado || "").toLowerCase();
   if (valor === "aprobada" || valor === "aprobado") return "aprobado";

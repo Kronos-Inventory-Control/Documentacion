@@ -1,3 +1,14 @@
+/* ==========================================================
+   KRONOS · E_panel-jefe.css
+   Estilos EXCLUSIVOS del contenido del Panel de Control.
+   Migrado desde Actualizacion/Maquetacion/css/Panel.css.
+
+   REGLA DE ORO:
+   Este archivo NO declara :root, NO toca aside, NO toca
+   .contenedor, NO toca header ni main. Esos los controlan
+   panel-base.css + kronos-global.css.
+   ========================================================== */
+
 /* ---------- TÍTULOS DEL PANEL ---------- */
 
 .titulo-panel {

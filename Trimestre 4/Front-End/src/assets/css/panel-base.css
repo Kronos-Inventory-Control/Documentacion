@@ -1,3 +1,16 @@
+/* ==========================================================
+   KRONOS · PANEL-BASE.CSS
+   Base compartida por TODAS las páginas del panel interno
+   (header, aside, botones, badges, layout, responsive).
+   Migrado desde Actualizacion/Maquetacion/css/panel-base.css.
+
+   Diferencia con el original: el menú móvil y el acordeón ya
+   no dependen de un <input type="checkbox"> oculto, sino de
+   clases que agrega React (useState) sobre .contenedor y
+   .item-acordeon. Se conservan también los selectores del
+   checkbox por si conviven páginas antiguas, pero el estado
+   real lo maneja React.
+   ========================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 

@@ -1,3 +1,14 @@
+/* ==========================================================
+   KRONOS · M_salidas.css
+   Estilos EXCLUSIVOS del formulario de registro de salidas.
+   El HTML original (Actualizacion/Maquetacion/Pagesjefe/Salida.html)
+   enlazaba a "../css/Salida.css", un archivo que en realidad NUNCA
+   existió en Actualizacion.zip (enlace roto). Como la página de
+   Salida es visualmente idéntica a la de Entrada (mismo formulario,
+   mismas clases: .titulo, .formulario, .confirmarRegistro,
+   .cancelarSalida), se usa como base real el Entrada.css que sí
+   existe, en vez de inventar estilos sin referencia real.
+   ========================================================== */
 
 .dashboard-main {
     background: var(--bg-main);

@@ -5,6 +5,16 @@ import "../../assets/css/A_registrarPorveedor-jefe.css";
 import { supabase } from "../../api/supabase";
 import { useRealtimeTable } from "../../hooks/useRealtimeTable";
 
+/**
+ * Proveedores · CRUD completo conectado a la tabla `proveedores` de
+ * Supabase (sección 5 del prompt):
+ *   - Crear: modal con insert.
+ *   - Leer / Buscar: tabla + buscador en tiempo real (client-side,
+ *     sobre datos ya sincronizados por postgres_changes).
+ *   - Actualizar: el botón de editar ahora sí abre el modal
+ *     precargado y hace un update (antes no tenía lógica).
+ *   - Eliminar: igual que antes, con confirmación de SweetAlert2.
+ */
 
 const REGISTROS_POR_PAGINA = 5;
 const FORM_INICIAL = { nombre: "", nit: "", telefono: "", direccion: "", correo: "", tipo_producto: "" };

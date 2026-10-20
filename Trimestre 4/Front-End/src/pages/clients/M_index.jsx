@@ -19,6 +19,15 @@ import { supabase } from '../../api/supabase';
 import { useRealtimeTable } from '../../hooks/useRealtimeTable';
 import ModalPerfilCliente from '../../components/ModalPerfilCliente';
 
+/**
+ * DATOS DE PRESENTACIÓN (no son el inventario).
+ * Los productos que se venden salen de la tabla `productos` de Supabase
+ * (nombre, categoría, precio y stock). La tabla no guarda imagen, ficha
+ * corta, precio anterior ni etiqueta comercial, así que esos datos se
+ * toman de esta lista cuando el nombre del producto coincide (sin
+ * importar mayúsculas ni tildes). Un producto nuevo sin entrada aquí se
+ * muestra igual, con un icono genérico en lugar de imagen.
+ */
 const PRESENTACION_PRODUCTOS = [
   {
     id: 1,
@@ -139,8 +148,9 @@ export default function M_index() {
   const navigate = useNavigate();
   const onNavegarAPedidos = () => navigate("/cliente/pedidos");
 
-  // Catálogo real: lee de la tabla `productos` (lectura pública por RLS)
-
+  // Catálogo real: se lee de la tabla `productos` (lectura pública por RLS)
+  // y se mantiene en tiempo real: si el jefe cambia precio o stock, la
+  // tienda se actualiza sin recargar.
   const {
     datos: productosDB,
     cargando: cargandoCatalogo,

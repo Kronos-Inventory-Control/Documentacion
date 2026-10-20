@@ -6,6 +6,29 @@ import { useRealtimeTable } from "../../hooks/useRealtimeTable";
 import { useAuth } from "../../context/AuthContext";
 import { useCategorias } from "../../hooks/useCategorias";
 
+/**
+ * Movimientos · Registrar entrada de material — ahora con afectación
+ * real de stock en Supabase (sección 4 del prompt):
+ *
+ *   - Si el nombre escrito coincide con un producto ya existente en
+ *     `productos`, se SUMA la cantidad a su `stock_actual`.
+ *   - Si no existe, se crea un producto nuevo con esa cantidad como
+ *     stock inicial (usando marca/modelo/categoría como datos del
+ *     nuevo material, ya que el formulario original permitía ambos
+ *     casos: reabastecer o dar de alta un material).
+ *   - Cada operación queda registrada en `movimientos` con tipo
+ *     "entrada", cantidad, motivo, responsable (usuario autenticado)
+ *     y fecha.
+ *   - Precio unitario y ubicación en bodega:
+ *       · Material NUEVO  -> ambos son obligatorios y se guardan en `productos`.
+ *       · Material EXISTENTE -> se precargan con los valores actuales; si el
+ *         usuario los cambia se actualizan, y si los deja vacíos NO se borra
+ *         lo que ya había.
+ *   - Categorías: se leen en tiempo real de la tabla `categorias` de Supabase
+ *     (hook useCategorias), así que las que se crean o eliminan en Stock se
+ *     reflejan aquí al instante.
+ */
+
 const ESTADO_INICIAL = {
   nombre: "",
   unidad: "Pieza",

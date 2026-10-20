@@ -8,6 +8,30 @@ import pulidoraAzul from "../../assets/img/pulidoraazul.jpeg";
 import { supabase } from "../../api/supabase";
 import { useRealtimeTable } from "../../hooks/useRealtimeTable";
 
+/**
+ * Garantías · Solicitudes — conectado en tiempo real a Supabase (tabla `garantias`).
+ * Permite listar, crear (radicar), actualizar estado/observaciones/bitácora y eliminar solicitudes,
+ * manteniendo la estética visual y la estructura de datos original.
+ *
+ * RADICACIÓN DESDE EL JEFE: antes "Nueva solicitud" era un formulario
+ * 100% de texto libre (el jefe escribía a mano número de orden,
+ * cliente y producto), sin ningún vínculo real con los proveedores ni
+ * las órdenes de compra que ya existen en el sistema. Ahora el jefe
+ * primero elige un proveedor ya creado (tabla `proveedores`) y luego
+ * una de SUS órdenes de compra ya confirmadas (tabla `ordenes_compra`,
+ * filtradas por `proveedor_id` y `origen = "interno"`), con lo que el
+ * N.º de orden y el producto quedan tomados directamente de esa orden
+ * real y la garantía guarda `orden_id` (así el proveedor la ve en su
+ * propio portal, vía la política RLS que ya existe sobre `orden_id`).
+ *
+ * "Depende de la fecha de la garantía": como no hay todavía una
+ * columna de "meses/días de garantía" por producto o proveedor, se usa
+ * una vigencia por defecto (GARANTIA_DIAS) contada desde la fecha de
+ * esa orden de compra. Si se vence, no se deja radicar contra esa
+ * orden. Si el negocio maneja una vigencia distinta por proveedor,
+ * basta con ajustar esta constante o cambiarla por una columna real.
+ */
+
 const GARANTIA_DIAS = 90;
 
 function calcularVigenciaGarantia(fechaOrden) {

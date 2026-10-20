@@ -3,14 +3,26 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import logoImg from "../../assets/img/logo.png";
 import { supabase } from "../../api/supabase";
+import { useAuth } from "../../context/AuthContext";
 import "../../assets/css/M_index.css";
 import "../../assets/css/recuperacion.css";
 
 /**
- * Recuperación de contraseña.
+ * Recuperación de contraseña · paso final: nueva contraseña
+ * (convertido desde pagesLogin/cambiarContra.html).
+ *
+ * Esta es la página a la que Supabase redirige de verdad (ver
+ * `redirectTo` en OlvidoContra.jsx) cuando la persona hace clic en el
+ * enlace de su correo. En ese momento ya queda con una sesión de
+ * recuperación activa — por eso el HTML original pedía "Usuario" y
+ * "PIN" (para identificar a la persona), pero aquí Supabase YA sabe
+ * quién es gracias a esa sesión, así que esos dos campos sobraban y
+ * se quitaron. Solo falta pedir la contraseña nueva y llamar a
+ * `supabase.auth.updateUser({ password })`.
  */
 export default function CambiarContra() {
   const navigate = useNavigate();
+  const { usuario, cargandoSesion } = useAuth();
   const [nuevaContra, setNuevaContra] = useState("");
   const [confirmarContra, setConfirmarContra] = useState("");
   const [guardando, setGuardando] = useState(false);
@@ -84,6 +96,20 @@ export default function CambiarContra() {
         <div className="recuperacion-encabezado">
           <h1>Restablecimiento de contraseña</h1>
         </div>
+
+        {/* Sin sesión de recuperación el cambio no es posible: se avisa antes de llenar el formulario */}
+        {!cargandoSesion && !usuario && (
+          <div className="bloque-ayuda">
+            <i className="bi bi-exclamation-triangle"></i>
+            <p>
+              Para cambiar tu contraseña abre el enlace que enviamos a tu correo.
+              Si no lo tienes o ya venció, solicita uno nuevo.
+            </p>
+            <Link to="/recuperar-contrasena" className="btn-primario--full btn-primario--compacto">
+              Solicitar un nuevo enlace
+            </Link>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit}>
           <div className="campo">

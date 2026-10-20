@@ -8,6 +8,10 @@ const CLAVE_TEMA = "kronos-theme";
 
 /**
  * Barra superior compartida del panel del jefe.
+ *
+ * Migrado desde Actualizacion/Maquetacion/partials/panel-shell.html
+ * (header) + js/tema-global.js (selector de tema claro/oscuro) +
+ * el listener de "Cerrar sesión" que antes vivía en js/panel-shell.js.
  */
 function Navbar({ nombreUsuario }) {
   const { usuario, perfil } = useAuth();

@@ -8,6 +8,12 @@ import { useRealtimeTable } from "../../hooks/useRealtimeTable";
 
 /**
  * Órdenes de Compra · Asociar Materiales / Generar Orden.
+ *
+ * Conectado en tiempo real a `productos` (catálogo con stock real) y a
+ * `proveedores` (solo se listan los `activo = true`, según la sección 6
+ * del prompt: "carga en tiempo real únicamente los proveedores
+ * activos"). Al confirmar, se inserta una fila en `ordenes_compra` por
+ * cada material del carrito, con `origen: "interno"`.
  */
 
 function A_materialCantidad() {

@@ -47,6 +47,3 @@ export const ROLES = {
   CLIENTE: "cliente",
   PROVEEDOR: "proveedor",
 };
-
-/** Roles que tienen acceso al panel interno (/jefe/*). */
-export const ROLES_PANEL = [ROLES.JEFE, ROLES.ADMINISTRADOR];

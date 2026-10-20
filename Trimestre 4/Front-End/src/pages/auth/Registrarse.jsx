@@ -5,6 +5,15 @@ import logoImg from "../../assets/img/logo.png";
 import { useAuth } from "../../context/AuthContext";
 import "../../assets/css/M_index.css";
 
+/**
+ * Registro real (Supabase Auth + tabla `perfiles`) migrado desde el
+ * proyecto de referencia, donde `handleSubmit` estaba vacío.
+ *
+ * Todo usuario que se registra aquí queda con rol "cliente" (es el
+ * formulario público de "Regístrate para comprar"); los roles jefe /
+ * administrador / empleado se asignan manualmente desde Supabase, no
+ * desde este formulario público.
+ */
 export default function Registrarse({ abierto = true, alCerrar }) {
   const { registrarse } = useAuth();
   const navigate = useNavigate();
@@ -44,6 +53,7 @@ export default function Registrarse({ abierto = true, alCerrar }) {
         text: "La contraseña debe tener al menos 8 caracteres.",
         icon: "warning",
         confirmButtonColor: "#E8600C",
+        confirmButtonText: "Entendido",
       });
       return;
     }
@@ -64,7 +74,7 @@ export default function Registrarse({ abierto = true, alCerrar }) {
 
       Swal.fire({
         title: "¡Cuenta creada!",
-        text: "Si tu proyecto requiere confirmación por correo, revisa tu bandeja de entrada antes de iniciar sesión.",
+        text: "Revisa tu bandeja de entrada: es posible que debas confirmar tu correo antes de iniciar sesión.",
         icon: "success",
         confirmButtonColor: "#E8600C",
         confirmButtonText: "Entendido",
@@ -78,6 +88,7 @@ export default function Registrarse({ abierto = true, alCerrar }) {
         text: error.message || "Inténtalo de nuevo en unos minutos.",
         icon: "error",
         confirmButtonColor: "#E8600C",
+        confirmButtonText: "Entendido",
       });
     } finally {
       setCargando(false);

@@ -1,6 +1,24 @@
 -- ============================================================
 -- KRONOS INVENTORY CONTROL — Esquema propuesto de Supabase
 -- ============================================================
+-- Este archivo NO se ejecutó contra tu proyecto de Supabase (este
+-- entorno no tiene acceso a tu base de datos). Es la propuesta de
+-- esquema que asume el código de src/pages/jefe/*.jsx, src/api/
+-- supabase.js y src/context/AuthContext.jsx.
+--
+-- Cómo usarlo:
+--   1. Si ya tienes tablas con estos propósitos pero otros nombres/
+--      columnas, ajusta las referencias en el código (están todas
+--      centralizadas: cada página usa useRealtimeTable("nombre_tabla")
+--      y llama a supabase.from("nombre_tabla") en sus acciones).
+--   2. Si no existen, puedes correr este script tal cual en el SQL
+--      Editor de Supabase para levantar el esquema mínimo funcional.
+--   3. Las políticas RLS de abajo son un PUNTO DE PARTIDA permisivo
+--      para desarrollo, no una auditoría de seguridad. Antes de ir a
+--      producción, revísalas con tu criterio (o el de tu equipo de
+--      seguridad): en particular, "cliente" hoy podría leer pedidos
+--      de otros clientes si no restringes por auth.uid().
+-- ============================================================
 
 -- ---------- PERFILES (rol de cada usuario) ----------
 create table if not exists perfiles (

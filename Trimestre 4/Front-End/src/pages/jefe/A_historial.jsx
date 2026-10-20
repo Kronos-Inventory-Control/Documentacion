@@ -7,7 +7,16 @@ import { supabase } from "../../api/supabase";
 import { useRealtimeTable } from "../../hooks/useRealtimeTable";
 
 /**
- * Órdenes de Compra · Historial de Compras
+ * Órdenes de Compra · Historial de Compras — conectado a la tabla
+ * `ordenes_compra` (sección 6 del prompt).
+ *
+ * Esa tabla integra en un solo lugar tanto las órdenes que genera el
+ * administrador (columna `origen = "interno"`, ligadas a un proveedor)
+ * como las que hace un cliente desde su portal (`origen = "cliente"`,
+ * ligadas a un `cliente_id`); aquí se muestra el nombre que corresponda
+ * en la columna "Proveedor / Cliente". Al cambiar el estado + guardar
+ * una observación, el `update` se sincroniza en tiempo real hacia
+ * cualquier cliente que esté viendo esa orden en /cliente/pedidos.
  */
 
 const BADGE_POR_ESTADO = {

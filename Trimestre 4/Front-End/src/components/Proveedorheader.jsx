@@ -7,6 +7,12 @@ const CLAVE_TEMA = "kronos-theme";
 
 /**
  * Barra superior del portal de proveedor.
+ *
+ * A diferencia de la maqueta original (que recibía `usuario` fijo por
+ * prop y hacía `window.location.href = '/login'` a mano), aquí usa
+ * AuthContext real: nombre del perfil logueado y el hook
+ * `useCerrarSesion()` (mismo que Navbar.jsx en el panel del jefe), que
+ * al salir deja a la persona en la página principal ("/").
  */
 export default function Proveedorheader() {
   const { usuario, perfil } = useAuth();

@@ -1,3 +1,11 @@
+/* ==========================================================
+   KRONOS · M_entradas.css
+   Estilos EXCLUSIVOS del formulario de registro de entradas.
+   Migrado desde Actualizacion/Maquetacion/css/Entrada.css,
+   quitando lo que ya vive en panel-base.css / kronos-global.css
+   (header, aside, .contenedor) para no pelear a punta de
+   !important contra el shell compartido.
+   ========================================================== */
 
 .dashboard-main {
     background: var(--bg-main);

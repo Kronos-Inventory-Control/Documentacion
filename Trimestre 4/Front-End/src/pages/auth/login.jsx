@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 import logoImg from "../../assets/img/logo.png";
@@ -12,6 +12,35 @@ import "../../assets/css/M_index.css";
  * ==========================================================
  * KRONOS — LOGIN
  * ==========================================================
+ *
+ * Inicio de sesión utilizando Supabase Auth.
+ *
+ * IMPORTANTE — de dónde sale el rol:
+ *
+ * El rol NO se lee de auth.users / app_metadata (ese campo no
+ * se llena desde el dashboard de Supabase al crear un usuario
+ * con "Add user", así que siempre queda vacío y el login
+ * fallaba con "Este usuario no tiene un rol asignado").
+ *
+ * El rol se lee de la tabla:
+ *
+ * perfiles
+ * └── rol   (text: 'jefe' | 'administrador' | 'empleado' |
+ *            'cliente' | 'proveedor')
+ *
+ * Es la MISMA tabla de la que leen AuthContext.jsx,
+ * ProtectedRoute y todas las páginas del portal de proveedor
+ * — por eso el login tiene que leer de ahí también: si cada
+ * parte de la app lee el rol de un lugar distinto, terminan
+ * desincronizadas.
+ *
+ * Roles utilizados:
+ *
+ * jefe / administrador → /jefe/panel
+ * cliente              → /cliente/pedidos
+ * proveedor            → /proveedor
+ *
+ * ==========================================================
  */
 
 export default function Login({ abierto = true, alCerrar }) {
@@ -23,8 +52,6 @@ export default function Login({ abierto = true, alCerrar }) {
   const { iniciarSesion } = useAuth();
 
   const navigate = useNavigate();
-
-  const location = useLocation();
 
   // ========================================================
   // ESTADOS
@@ -76,22 +103,6 @@ export default function Login({ abierto = true, alCerrar }) {
   // ========================================================
 
   const redirigirSegunRol = (rol) => {
-
-    // Si venía de una ruta protegida (ProtectedRoute la guardó
-    // en location.state.desde), volvemos ahí en vez de al panel
-    // por defecto de su rol.
-
-    const destinoPrevio = location.state?.desde;
-
-    if (destinoPrevio && destinoPrevio !== "/login") {
-
-      navigate(destinoPrevio, {
-        replace: true,
-      });
-
-      return;
-    }
-
 
     // ------------------------------------------------------
     // JEFE / ADMINISTRADOR
@@ -181,6 +192,8 @@ export default function Login({ abierto = true, alCerrar }) {
 
     setCargando(true);
 
+    // true mientras exista una sesión abierta cuyo rol aún no validamos.
+    let sesionSinValidar = false;
 
     try {
 
@@ -192,6 +205,8 @@ export default function Login({ abierto = true, alCerrar }) {
         correo,
         password
       );
+
+      sesionSinValidar = true;
 
 
       // ----------------------------------------------------
@@ -249,6 +264,9 @@ export default function Login({ abierto = true, alCerrar }) {
       // MENSAJE DE BIENVENIDA
       // ----------------------------------------------------
 
+      // Rol validado: a partir de aquí la sesión debe quedar abierta.
+      sesionSinValidar = false;
+
       await Swal.fire({
 
         title: "¡Bienvenido de nuevo!",
@@ -292,6 +310,12 @@ export default function Login({ abierto = true, alCerrar }) {
 
 
     } catch (error) {
+
+      // Si ya se había autenticado pero no tiene perfil/rol válido, no dejamos
+      // una sesión abierta que ProtectedRoute no sabría a dónde enviar.
+      if (sesionSinValidar) {
+        await supabase.auth.signOut().catch(() => {});
+      }
 
       // ----------------------------------------------------
       // ERROR DE LOGIN
@@ -510,6 +534,11 @@ export default function Login({ abierto = true, alCerrar }) {
   // ========================================================
   // MODO MODAL
   // ========================================================
+  //
+  // Si alCerrar existe significa que Login está siendo
+  // utilizado dentro de otra página como modal.
+  //
+  // ========================================================
 
   if (alCerrar) {
 
@@ -519,6 +548,12 @@ export default function Login({ abierto = true, alCerrar }) {
 
   // ========================================================
   // MODO PÁGINA COMPLETA
+  // ========================================================
+  //
+  // Cuando entramos directamente a:
+  //
+  // /login
+  //
   // ========================================================
 
   return (

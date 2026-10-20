@@ -1,3 +1,31 @@
+/* ==========================================================================
+   KRONOS · kronos-theme-fix.css
+   Corrección global del tema claro / oscuro (index + todos los paneles).
+
+   CÓMO USARLO
+   1) Copia este archivo a src/assets/css/ (junto a los demás CSS).
+   2) Impórtalo de ÚLTIMO en main.jsx / index.jsx, después de todos los demás:
+        import './assets/css/kronos-theme-fix.css';
+   3) Asegúrate de que el tema se escriba en <html data-theme="light|dark">
+      (ver el script para index.html en las instrucciones).
+
+   QUÉ ARREGLA (causas reales encontradas en tus CSS)
+   A) kronos-global.css fuerza `color: var(--k-text) !important` en tarjetas,
+      tablas, modales, etc. En oscuro ese texto es CLARO, pero varios CSS
+      pintan fondos fijos claros (#fff, #f8f9fa, #f8f6f2): texto claro sobre
+      fondo claro = invisible.  (D_garantia-jefe, E_panel-jefe, D_garantia-cliente)
+   B) Al revés: E_panel-jefe fija texto #1b1b18 (oscuro) que en tema oscuro
+      queda invisible sobre fondo oscuro.
+   C) D_garantia-cliente (.gk-root) solo tiene paleta clara: no cambia de tema.
+   D) M_pedidos usa clases .modo-oscuro/.modo-claro y NO el data-theme global.
+   E) M_index define --rojo solo en oscuro; en claro queda sin valor.
+   F) Submenú del aside en tema claro: naranja sobre crema (poco contraste).
+   G) .proveedor-scope tbody td tenía fondo blanco fijo (texto claro en oscuro).
+   H) Flecha de <select> y botón de cerrar de Bootstrap invisibles en oscuro.
+   I) Encabezado dorado de la tabla de historial: texto blanco sobre dorado.
+   ========================================================================== */
+
+
 /* --------------------------------------------------------------------------
    0) TOKENS EXTRA (se suman a los --k-* existentes, no los reemplazan)
    -------------------------------------------------------------------------- */

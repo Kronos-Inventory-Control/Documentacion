@@ -5,6 +5,21 @@ import { supabase } from "../../api/supabase";
 import { useRealtimeTable } from "../../hooks/useRealtimeTable";
 import { useCategorias } from "../../hooks/useCategorias";
 
+/**
+ * Gestión de Inventario · Reportes (conectado a Supabase en tiempo real)
+ *
+ *  - Los reportes se CALCULAN solos desde `productos` y `movimientos`
+ *    (ya no se escribe el tipo ni la cantidad a mano).
+ *  - 5 tipos: Inventario general, Por reabastecer, Agotados,
+ *    Valorización por categoría y Movimientos (entradas/salidas por fechas).
+ *  - Filtro por categoría (las mismas de la tabla `categorias`).
+ *  - Vista previa en vivo con resumen, gráfico de barras y tabla.
+ *  - Exportar a CSV (abre en Excel) e imprimir / guardar como PDF.
+ *  - "Guardar reporte" deja un registro en `reportes_generados`
+ *    (historial en tiempo real). Desde el historial se puede volver a ver,
+ *    descargar o eliminar.
+ */
+
 const SIN_CATEGORIA = "Sin categoría";
 const TODAS = "Todas";
 

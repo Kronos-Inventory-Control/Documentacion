@@ -33,6 +33,27 @@ import A_principalProveedor from "./pages/proveedor/A_principalProveedor";
 import A_orden from "./pages/proveedor/A_orden";
 import D_garantiasProveedor from "./pages/proveedor/D_garantiasProveedor";
 
+/**
+ * Rutas de la aplicación.
+ *
+ * - "/" es el índice/landing público (tienda + login/registro en modal),
+ *   migrado tal cual desde el proyecto de referencia.
+ * - "/login" y "/registro" son la versión de página completa de esos
+ *   mismos formularios (solo para enlaces directos). ProtectedRoute ya
+ *   NO redirige aquí: al cerrar sesión (jefe, proveedor o cliente) o
+ *   entrar sin sesión a una ruta privada, siempre se va a "/" (M_index).
+ * - "/cliente/*" es el portal del cliente (pedidos y garantías),
+ *   protegido para el rol "cliente".
+ * - "/jefe/*" es el panel administrativo, protegido para los roles
+ *   "jefe" y "administrador".
+ *
+ * - "/proveedor/*" es el portal del proveedor (panel, órdenes de
+ *   compra y garantías), protegido para el rol "proveedor".
+ *
+ * El rol "empleado" todavía no tiene una vista propia (no formaba
+ * parte de ninguno de los dos proyectos fuente); por ahora, si un
+ * usuario con ese rol inicia sesión, ProtectedRoute lo deja en "/".
+ */
 function App() {
   return (
     <Routes>

@@ -1,5 +1,27 @@
 /* ==========================================================
    KRONOS · Recuperación de acceso
+   ==========================================================
+   Estilos de las 4 pantallas de recuperación:
+     · OlvidoContra            (/recuperar-contrasena)
+     · RestablecimientoContra  (/restablecimiento-contrasena)
+     · ModificarCorreo         (/modificar-correo)
+     · CambiarContra           (/cambiar-contrasena)
+
+   Diseño tomado de las capturas de las maquetas originales
+   (pagesLogin/*.html): fondo en degradé gris → café oscuro,
+   tarjeta oscura translúcida con borde fino, títulos en Oswald,
+   campos casi negros y botones naranja.
+
+   Todo está encapsulado dentro de `.pantalla-recuperacion` y con
+   sus propios colores (variables --rec-*) por dos motivos:
+     1) Estas pantallas se ven SIEMPRE oscuras, sin importar el tema
+        claro/oscuro elegido en la tienda o en el panel.
+     2) kronos-global.css (panel del jefe) fuerza estilos con
+        !important sobre `input`, `body`, etc. en TODA la app, así
+        que aquí hay que responder con más especificidad (y !important
+        solo donde hace falta) para que los campos no cambien de color.
+
+   No se tocan login.jsx ni Registrarse.jsx (siguen con M_index.css).
    ========================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');

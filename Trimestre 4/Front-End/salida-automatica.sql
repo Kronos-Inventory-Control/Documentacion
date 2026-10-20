@@ -1,6 +1,21 @@
 -- ============================================================
 -- SALIDA AUTOMÁTICA AL CONFIRMAR LA COMPRA DEL CLIENTE
 -- Correr completo en Supabase > SQL Editor (se puede repetir sin problema).
+--
+-- Qué hace:
+--   Cuando el cliente pulsa "Confirmar compra", M_index.jsx inserta
+--   filas en `ordenes_compra`. Este trigger reacciona a ese insert y,
+--   en la misma transacción:
+--     1) descuenta el stock en `productos`
+--     2) registra la fila tipo 'salida' en `movimientos`
+--   La fila de `movimientos` es la que el jefe ve en tiempo real en
+--   Panel de Control > Historial de Movimientos.
+--
+-- Por qué en la base de datos y no en el JS del cliente:
+--   las políticas RLS de `productos` y `movimientos` solo dejan
+--   escribir a jefe/administrador, así que desde la sesión del cliente
+--   esa escritura fallaría. La función es SECURITY DEFINER: se ejecuta
+--   con permisos del dueño y salta esa restricción de forma controlada.
 -- ============================================================
 
 -- 1) Compra confirmada -> salida + descuento de stock

@@ -8,7 +8,26 @@ import "../../assets/css/M_index.css";
 import "../../assets/css/recuperacion.css";
 
 /**
- * Recuperación de contraseña·
+ * Recuperación de contraseña · "ya no tengo acceso a mi correo"
+ * (convertido desde pagesLogin/modificarCorreo.html).
+ *
+ * El HTML original pedía "Usuario (NIT)" + correo nuevo y no hacía
+ * nada real — y de hecho, sin backend propio, no hay forma segura de
+ * verificar "sí, esta persona es dueña de esta cuenta" a partir de
+ * solo un NIT escrito a mano.
+ *
+ * Lo que SÍ se puede hacer de forma segura y real con Supabase: esta
+ * página funciona cuando la persona ya tiene una sesión activa —ya
+ * sea porque inició sesión normal, o porque viene de hacer clic en el
+ * enlace de recuperación (Supabase la deja autenticada temporalmente
+ * en /cambiar-contrasena, y desde ahí puede entrar aquí sin salir de
+ * esa sesión)—. Con sesión activa, `supabase.auth.updateUser({email})`
+ * le manda un correo de confirmación a la dirección NUEVA; el cambio
+ * solo queda hecho cuando la persona confirma desde ese correo.
+ *
+ * Si no hay sesión activa, se avisa que hace falta iniciar sesión (o
+ * venir del enlace de recuperación) en vez de fingir que el cambio
+ * ya se hizo.
  */
 export default function ModificarCorreo() {
   const navigate = useNavigate();

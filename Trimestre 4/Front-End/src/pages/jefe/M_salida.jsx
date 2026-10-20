@@ -6,6 +6,13 @@ import { useRealtimeTable } from "../../hooks/useRealtimeTable";
 import { useCategorias } from "../../hooks/useCategorias";
 import { useAuth } from "../../context/AuthContext";
 
+/**
+ * Movimientos · Registrar salida de material — con afectación real de
+ * stock y la validación de seguridad pedida en la sección 4:
+ * "Impedir registrar salidas si la cantidad a retirar supera el
+ * stock_actual disponible."
+ */
+
 const ESTADO_INICIAL = {
   nombre: "",
   unidad: "Pieza",

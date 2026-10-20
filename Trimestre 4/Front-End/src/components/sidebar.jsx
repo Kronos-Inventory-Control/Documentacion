@@ -3,6 +3,14 @@ import { NavLink, useLocation } from "react-router-dom";
 
 /**
  * Menú lateral del panel del jefe.
+ *
+ * Migrado desde Actualizacion/Maquetacion/partials/panel-shell.html
+ * (js/panel-shell.js se encargaba de inyectar este HTML y de abrir
+ * el acordeón correcto vía data-page / ALIAS_ACTIVO).
+ *
+ * Aquí el acordeón y el botón de menú móvil ya no dependen de un
+ * <input type="radio"/checkbox"> oculto ni de jQuery: se controlan
+ * con useState + la ruta activa de React Router.
  */
 
 const SECCIONES = [

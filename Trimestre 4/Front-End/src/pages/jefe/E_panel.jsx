@@ -6,6 +6,19 @@ import logo from "../../assets/img/logo.png";
 import { supabase } from "../../api/supabase";
 import { useRealtimeTable } from "../../hooks/useRealtimeTable";
 
+/**
+ * Panel de Control del jefe — ahora conectado a Supabase en tiempo real.
+ *
+ * Tablas usadas (ver documentación de esquema en src/api/supabase.js):
+ *   productos    -> KPIs, Alertas de Stock, Reporte de Críticos, Umbrales
+ *   movimientos  -> Historial de Movimientos
+ *   reportes_generados -> se inserta un registro cada vez que se exporta
+ *
+ * Toda lectura + suscripción realtime vive en useRealtimeTable; aquí solo
+ * se calculan derivados (KPIs, filtros) y se hacen los `insert`/`update`
+ * puntuales de cada acción, siempre envueltos en try/catch.
+ */
+
 const estadoDeStock = (producto) => {
   if (producto.stock_actual <= 0) return { clase: "agotado", etiqueta: "Agotado" };
   if (producto.stock_actual <= producto.umbral_minimo) return { clase: "bajo-stock", etiqueta: "Bajo stock" };
