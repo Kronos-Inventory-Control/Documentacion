@@ -1,3 +1,5 @@
+BRO CIERRE LA CUENTA CUANDO SE VAYA, GRACIAS :)
+ 
  <div align="center">
 
 <img src="https://capsule-render.vercel.app/api?type=venom&height=300&color=0:070B14,25:111827,55:7C2D12,80:E8600C,100:070B14&text=KRONOS&fontSize=100&fontColor=FFFFFF&stroke=E8600C&strokeWidth=2&animation=fadeIn&fontAlignY=45&desc=INVENTORY%20CONTROL%20SYSTEM&descSize=20&descColor=FDBA74&descAlignY=65" width="100%" alt="KRONOS — Inventory Control"/>
